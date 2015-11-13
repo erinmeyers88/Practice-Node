@@ -2,12 +2,20 @@ var express = require("express");
 var bodyParser = require("body-parser");
 
 var usersCtrl = require("./controllers/usersCtrl");
-var moviesCtrl = require("./controllers/moviesCtrl")
+var moviesCtrl = require("./controllers/moviesCtrl");
 
 var app = express();
 
 
 app.use(bodyParser.json()); //Function inside calls next automatically. 
+
+
+//This is middleware - this can be used to collect info on what people are asking for.
+app.use(function(req, res, next) {
+	console.log("path", req.path);
+	console.log("body", req.body);
+	next();
+});
 
 
 app.get("/users", usersCtrl.index);
